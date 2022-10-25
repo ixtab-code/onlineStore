@@ -9,6 +9,10 @@ const mongoose = require("mongoose");
 
 const MONGODB_URL = `mongodb+srv://ixtab:1@cluster0.jq65ufq.mongodb.net/?retryWrites=true&w=majority`;
 
+const shopRoutes = require("./server/routes/shop");
+app.use(shopRoutes);
+
+
 mongoose
 	.connect(MONGODB_URL, {
 		useNewUrlParser: true,
