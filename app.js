@@ -12,6 +12,8 @@ const MONGODB_URL = `mongodb+srv://ixtab:1@cluster0.jq65ufq.mongodb.net/?retryWr
 const adminRoutes = require("./server/routes/admin");
 const shopRoutes = require("./server/routes/shop");
 
+app.set("view engine", "ejs");
+
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
