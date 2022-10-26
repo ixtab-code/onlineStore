@@ -15,12 +15,27 @@ const shopRoutes = require("./server/routes/shop");
 const path = require('path');
 const rootDir = require('./server/utils/path');
 
+const errorController = require('./server/controller/error');	
+
+
 app.set('views', path.join(rootDir, './client/views'));
 app.set("view engine", "ejs");
 
-
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
+
+app.get("/500", errorController.get500);
+
+app.use(errorController.get404);
+
+app.use((error, req, res, next) => {
+	// res.status(error.httpStatusCode).render(...);
+	res.status(500).render("500", {
+		pageTitle: "Error!",
+		path: "/500",
+		isAuthenticated: req.session,
+	});
+});
 
 mongoose
 	.connect(MONGODB_URL, {
