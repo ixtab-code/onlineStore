@@ -12,11 +12,15 @@ const MONGODB_URL = `mongodb+srv://ixtab:1@cluster0.jq65ufq.mongodb.net/?retryWr
 const adminRoutes = require("./server/routes/admin");
 const shopRoutes = require("./server/routes/shop");
 
+const path = require('path');
+const rootDir = require('./server/utils/path');
+
+app.set('views', path.join(rootDir, './client/views'));
 app.set("view engine", "ejs");
+
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
-
 
 mongoose
 	.connect(MONGODB_URL, {
