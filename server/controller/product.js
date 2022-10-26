@@ -1,6 +1,6 @@
 const products = [];
 exports.getAddProduct = (req, res, next) => {
-	res.render("../../client/views/shop/add-product", {
+	res.render("../../client/views/admin/add-product", {
 		pageTitle: "Add Product",
 		path: "/admin/add-product",
 		formsCSS: true,
