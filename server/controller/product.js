@@ -1,6 +1,6 @@
 const products = [];
 exports.getAddProduct = (req, res, next) => {
-	res.render("add-product", {
+	res.render("../../client/views/shop/add-product", {
 		pageTitle: "Add Product",
 		path: "/admin/add-product",
 		formsCSS: true,
@@ -17,7 +17,7 @@ exports.postAddProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
     req.body;
     console.log(req.body);
-	res.render("shop", {
+	res.render("../../client/views/shop/shop", {
 		prods: products,
 		pageTitle: "Shop",
 		path: "/",
