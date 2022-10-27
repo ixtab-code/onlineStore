@@ -1,51 +1,48 @@
-require("dotenv").config();
+const path = require('path');
 
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const errorController = require('./controllers/error');
+// const User = require('./models/user');
+
 const app = express();
 
-const bodyParser = require("body-parser");
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
-const mongoose = require("mongoose");
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-const MONGODB_URL = `mongodb+srv://ixtab:1@cluster0.jq65ufq.mongodb.net/?retryWrites=true&w=majority`;
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-const adminRoutes = require("./server/routes/admin");
-const shopRoutes = require("./server/routes/shop");
+// app.use((req, res, next) => {
+//   User.findById('5baa2528563f16379fc8a610')
+//     .then(user => {
+//       req.user = new User(user.name, user.email, user.cart, user._id);
+//       next();
+//     })
+//     .catch(err => console.log(err));
+// });
 
-const path = require('path');
-const rootDir = require('./server/utils/path');
-
-const errorController = require('./server/controller/error');	
-
-
-app.use(express.static(path.join(__dirname, 'client/views')));
-app.set('views', path.join(rootDir, './client/views'));
-app.set("view engine", "ejs");
-
-
-app.use("/admin", adminRoutes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.get("/500", errorController.get500);
 app.use(errorController.get404);
 
-app.use((error, req, res, next) => {
-	// res.status(error.httpStatusCode).render(...);
-	res.status(500).render("500", {
-		pageTitle: "Error!",
-		path: "/500",
-		isAuthenticated: req.session,
-	});
-});
-
 mongoose
-	.connect(MONGODB_URL, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	})
-    .then(() => console.log('DBConnection Successfull'))
-	.then(() => {
-		app.listen(process.env.PORT || 3000);
-		console.log(`Started on port ${process.env.PORT}`);
-	})
-	.catch((err) => console.log(err));
+  .connect(
+    'mongodb+srv://ixtab:1@cluster0.jq65ufq.mongodb.net/?retryWrites=true&w=majority'
+  )
+  .then(() => {
+    console.log('DBconnection established');
+  })
+  .then(() => {
+    app.listen(8001);
+    console.log(`Listening on PORT 8001`);
+  })
+  .catch(err => {
+    console.log(err);
+  });
