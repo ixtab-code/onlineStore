@@ -18,8 +18,10 @@ const rootDir = require('./server/utils/path');
 const errorController = require('./server/controller/error');	
 
 
+app.use(express.static(path.join(__dirname, 'client/views')));
 app.set('views', path.join(rootDir, './client/views'));
 app.set("view engine", "ejs");
+
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
