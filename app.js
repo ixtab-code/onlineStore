@@ -43,8 +43,8 @@ mongoose
     User.findOne().then(user => {
       if (!user) {
         const user = new User({
-          name: 'Max',
-          email: 'max@text.com',
+          name: 'admin',
+          email: 'admin@admin.com',
           cart: {
             items: []
           }
